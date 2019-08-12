@@ -9,6 +9,12 @@ class Node:
 class LinkedList:
     """
     A linked list is a linear data structure, in which the elements are not stored at contiguous memory locations. The elements in a linked list are linked using pointers as shown in the below image:
+
+    Algo   Ave  Worst
+    Space  O(n) O(n)
+    Search O(n) O(n)
+    Insert O(1) O(1)
+    Delete O(1) O(1)
     """
 
     def __init__(self):
