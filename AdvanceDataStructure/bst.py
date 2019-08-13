@@ -21,8 +21,6 @@ class BST:
     Binary search trees allow fast lookup, addition and removal of items. The way that they are set up means that, on average, each comparison allows the operations to skip about half of the tree, so that each lookup, insertion or deletion takes time proportional to the logarithm of the number of items stored in the tree.
     """
 
-    But I think I could have added another column with a type of ltree for querying 
-
     def __init__(self):
         self.root = None
     
@@ -54,7 +52,7 @@ class BST:
         """Finds the node of the given data in the tree"""
         root = self.root
 
-        if === root:
+        if data == root:
             self.root = Node(data)
             return self.root
         else:
@@ -110,7 +108,7 @@ class BST:
                     successor = successor.left
                 node.data = successor.data
                 node.right = remove_node(node, successor.data)
-            else if data < node.data:
+            elif data < node.data:
                 node.left = remove_node(node.left, data)
                 return node
             else:
@@ -155,3 +153,49 @@ class BST:
         
         # if we got here, it means the tree is not balanced
         return False
+
+    @classmethod
+    def test(cls, node):
+        """Tests if a tree is a BST"""
+
+        def test_node(node):
+            if not node:
+                return True
+
+            if node.left is None and node.right is None:
+                return True
+            
+            test_lsubtree = False
+            test_rsubtree = False
+
+            if not node.left:
+                test_lsubtree = True
+
+            if not node.right:
+                test_rsubtree =  True
+            
+            if node.left and node.left.data < node.data:
+                test_lsubtree = test_node(node.left)
+
+            if node.right and node.right.data > node.data:
+                test_rsubtree = test_node(node.right)
+
+            return all([test_lsubtree, test_rsubtree])
+
+        return test_node(node)
+
+bst = BST()
+bst.add(10)
+bst.add(11)
+
+tree = Node(3)
+tree.right = Node(4)
+tree.left = Node(1)
+# test for bst on this tree will fail because 2 > 1 and was inserted on the right instead of the left
+tree.left.left = Node(2)
+tree.left.right = Node(5)
+# test for bst on this tree will fail because 2 > 1 and was inserted on the right instead of the left
+print('Test BST', BST.test(bst.root))
+# test for bst on this tree will pass because,
+#  the BST class was used to create this tree which respect the right and left principle of BST
+print('Test BST', BST.test(tree))
