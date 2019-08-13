@@ -1,6 +1,15 @@
 """This module will implement a stack in Python"""
 
 class Stack:
+    """
+    A stack is a basic data structure where you can only insert or delete items at the top of the stack.
+    
+    Algo   Ave  Worst
+    Space  O(n) O(n)
+    Search O(n) O(n)
+    Insert O(1) O(1)
+    Delete O(1) O(1)
+    """
     def __init__(self):
         self.__store = {}
         self.__count = 0
