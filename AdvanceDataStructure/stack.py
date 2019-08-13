@@ -3,7 +3,7 @@
 class Stack:
     """
     A stack is a basic data structure where you can only insert or delete items at the top of the stack.
-    
+
     Algo   Ave  Worst
     Space  O(n) O(n)
     Search O(n) O(n)
@@ -37,7 +37,7 @@ class Stack:
         return item
 
     def peek(self):
-        """Returns the item in the stack"""
+        """Returns the last item in the stack"""
         if not self.__count:
             return
         return self.__store[self.__count]
@@ -47,6 +47,9 @@ class Stack:
         return f"Stack: \n Size: {self.__count} \n Items: {self.__store}"
 
 book = Stack()
+book.pop()
+print('Peek', book.peek())
+print(book)
 book.push('Harry potter')
 book.push('The Hobbit')
 book.push('The last day at Forcado high school')
