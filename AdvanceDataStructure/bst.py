@@ -80,9 +80,42 @@ class BST:
         """Checks if a data is present in the tree"""
         return self.find(data) is not None
 
-    # def remove(self, data):
-    #     """Removes a node from the tree"""
-    #     root = self.root
+    def remove(self, data):
+        """Removes a node from the tree"""
+        def remove_node(node, data):
+            # Return if data is not in the tree
+            if not node:
+                return
 
-    #     if data == root.data:
+            if node.data == data:
+                # node has no child, remove the node
+                if not node.left and not node.right:
+                    return
+                
+                # No right child, replace the node with the left child
+                if not node.right:
+                    return node.left
+                
+                # No left child, replace the node with its right child
+                if not node.left:
+                    return node.right
+
+                # if we have two children, 
+                # replace it with the value of its in-order successor ,
+                # (a node with the least value in the right subtree),
+                # recursively delete the in-order successor in the right subtree
+                # check https://www.techiedelight.com/deletion-from-bst/ for reference
+                successor = node.right
+                while successor.left:
+                    successor = successor.left
+                node.data = successor.data
+                node.right = remove_node(node, successor.data)
+            else if data < node.data:
+                node.left = remove_node(node.left, data)
+                return node
+            else:
+                node.right = remove_node(node.right, data)
+                return node
+
+        self.root = remove_node(root)
             
