@@ -118,4 +118,40 @@ class BST:
                 return node
 
         self.root = remove_node(root)
-            
+    
+    def height(node):
+        """Calculates the height of a node by recursively calculating the each of each subtre plus 1"""
+        if node is None:
+            return 0
+
+        ldepth = height(node.left)
+        rdepth = height(node.right)
+
+        return max(ldepth, rdepth) + 1
+
+    def is_balanced(self, node):
+        """
+        A tree where no leaf is much farther away from the root than any other leaf. Different balancing schemes allow different definitions of “much farther” and different amounts of work to keep them balanced.
+
+        Consider a height-balancing scheme where following conditions should be checked to determine if a binary tree is balanced.
+        An empty tree is height-balanced. A non-empty binary tree T is balanced if:
+        1) Left subtree of T is balanced
+        2) Right subtree of T is balanced
+        3) The difference between heights of left subtree and right subtree is not more than 1.
+        https://www.geeksforgeeks.org/how-to-determine-if-a-binary-tree-is-balanced/
+        """
+        
+        # An empty treee is always balanced
+        if node is None:
+            return True
+
+        lh = self.height(node.left)
+        rh = self.height(node.right)
+
+        # balance factor of a node is lh - rh = {-1, 0, 1} or <= |1|
+        # So we want to check if the root node is balanced, and each child is also balanced
+        if abs(lh - rh) <= 1 and is_balanced(node.left) and is_balanced(node.right):
+            return True
+        
+        # if we got here, it means the tree is not balanced
+        return False
