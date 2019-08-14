@@ -1,5 +1,7 @@
 """This module implements a binary search tree"""
 
+from queue import Queue
+
 class Node:
     def __init__(self, data):
         self.data = data
@@ -154,6 +156,56 @@ class BST:
         # if we got here, it means the tree is not balanced
         return False
 
+    def pre_order(self):
+        if not node:
+            return
+        result = []
+        def traverse_pre_order(node):
+            result.append(node)
+            node.left and traverse_pre_order(node.left)
+            node.right and traverse_pre_order(node.right)
+            
+        return traverse_pre_order(self.root)
+
+    def in_order(self):
+        if not node:
+            return
+        result = []
+        def traverse_in_order(node):
+            node.left and traverse_pre_order(node.left)
+            result.append(node)
+            node.right and traverse_pre_order(node.right)
+
+        return traverse_pre_order(self.root)
+
+    def post_order(self):
+        if not node:
+            return
+        result = []
+        def traverse_in_order(node):
+            node.left and traverse_pre_order(node.left)
+            node.right and traverse_pre_order(node.right)
+            result.append(node)
+
+        return traverse_pre_order(self.root)
+
+    def level_order(self):
+        """Arranges nodes from left to right"""
+        result = []
+        Q = Queue() # Queue to store next node to visit.
+        if self.root:
+            Q.enqueue(self.root)
+            while Q.size():
+                node = Q.dequeue()
+                result.append(node.data)
+
+                if node.left:
+                    Q.enqueue(node.left)
+                
+                if node.right:
+                    Q.enqueue(node.right)
+            return result
+
     @classmethod
     def test(cls, node):
         """Tests if a tree is a BST"""
@@ -195,7 +247,19 @@ tree.left = Node(1)
 tree.left.left = Node(2)
 tree.left.right = Node(5)
 # test for bst on this tree will fail because 2 > 1 and was inserted on the right instead of the left
-print('Test BST', BST.test(bst.root))
-# test for bst on this tree will pass because,
-#  the BST class was used to create this tree which respect the right and left principle of BST
 print('Test BST', BST.test(tree))
+# test for bst on this tree will pass because,
+# the BST class was used to create this tree which respect the right and left principle of BST
+print('Test BST', BST.test(bst.root))
+
+tree = Node(5)
+tree.left = Node(2)
+tree.left.left = Node(1)
+tree.left.right = Node(3)
+
+tree.right = Node(7)
+tree.right.left = Node(6)
+tree.right.right = Node(8)
+# test for bst on this tree will pass because, the right and left principle of BST was respect
+print('Test BST', BST.test(tree))
+print('Level Order', bst.level_order())
